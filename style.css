@@ -1335,7 +1335,7 @@ body {
   .mu-testimonial-slider li .mu-testimonial-single .mu-testimonial-bio {
     color: #fff;
     display: inline-block;
-    float: left;
+    float: none;
     margin-top: 5px;
     margin-bottom: 25px;
     position: relative;
