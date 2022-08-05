@@ -1,3 +1,4 @@
+from pickle import TRUE
 from django.contrib import messages, auth
 from django.http import HttpResponseRedirect
 
@@ -7,7 +8,7 @@ from django.views.generic import CreateView, FormView, RedirectView
 from .forms import *
 
 
-class RegisterView(CreateView):
+class CustRegisterView(CreateView):
     model = User
     form_class = UserRegistrationForm
     template_name = 'accounts/customer_register.html'
@@ -28,23 +29,24 @@ class RegisterView(CreateView):
     def post(self, request, *args, **kwargs):
         if User.objects.filter(email=request.POST['email']).exists():
             messages.warning(request, 'This email is already taken')
-            return redirect('accounts:register')
+            return redirect('accounts:customer_register')
 
         user_form = UserRegistrationForm(data=request.POST)
 
         if user_form.is_valid():
             user = user_form.save(commit=False)
             password = user_form.cleaned_data.get("password1")
+            user.is_customer = True
             user.set_password(password)
             user.save()
             messages.success(request, 'Successfully registered')
-            return redirect('accounts:login')
+            return redirect('accounts:customer_login')
         else:
             print(user_form.errors)
             return render(request, 'accounts/customer_register.html', {'form': user_form})
 
 
-class LoginView(FormView):
+class CustLoginView(FormView):
     success_url = '/'
     form_class = UserLoginForm
     template_name = 'accounts/customer_login.html'
@@ -58,15 +60,71 @@ class LoginView(FormView):
             return HttpResponseRedirect(self.get_success_url())
         return super().dispatch(self.request, *args, **kwargs)
 
-    # @method_decorator(sensitive_post_parameters('password'))
-    # @method_decorator(csrf_protect)
-    # @method_decorator(never_cache)
-    # def dispatch(self, request, *args, **kwargs):
-    #     if self.request.user.is_authenticated:
-    #         redirect_to = self.get_success_url()
-    #         return HttpResponseRedirect(redirect_to)
-    #     # return super().dispatch(self.request, *args, **kwargs)
-    #     return super(Login, self).dispatch(request, *args, **kwargs)
+    def get_form_class(self):
+        return self.form_class
+
+    def form_valid(self, form):
+        auth.login(self.request, form.get_user())
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
+
+
+# For restaurants
+
+class RestRegisterView(CreateView):
+    model = User
+    form_class = UserRegistrationForm
+    template_name = 'accounts/restaurant_register.html'
+    success_url = '/'
+
+    extra_context = {
+        'title': 'Register'
+    }
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return HttpResponseRedirect(self.get_success_url())
+        return super().dispatch(self.request, *args, **kwargs)
+
+    def get_success_url(self):
+        return self.success_url
+
+    def post(self, request, *args, **kwargs):
+        if User.objects.filter(email=request.POST['email']).exists():
+            messages.warning(request, 'This email is already taken')
+            return redirect('accounts:restaurant_register')
+
+        user_form = UserRegistrationForm(data=request.POST)
+
+        if user_form.is_valid():
+            user = user_form.save(commit=False)
+            password = user_form.cleaned_data.get("password1")
+            user.is_restaurant_owner = TRUE
+            user.set_password(password)
+            user.save()
+            messages.success(request, 'Successfully registered')
+            return redirect('accounts:restaurant_login')
+        else:
+            print(user_form.errors)
+            return render(request, 'accounts/restaurant_register.html', {'form': user_form})
+
+
+
+class RestLoginView(FormView):
+    success_url = '/'
+    form_class = UserLoginForm
+    template_name = 'accounts/restaurant_login.html'
+
+    extra_context = {
+        'title': 'Login'
+    }
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return HttpResponseRedirect(self.get_success_url())
+        return super().dispatch(self.request, *args, **kwargs)
 
     def get_form_class(self):
         return self.form_class
@@ -79,11 +137,12 @@ class LoginView(FormView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
+
 class LogoutView(RedirectView):
     """
     Provides users the ability to logout
     """
-    url = reverse_lazy('core:home')
+    url = reverse_lazy('core:index')
 
     def get(self, request, *args, **kwargs):
         auth.logout(request)
