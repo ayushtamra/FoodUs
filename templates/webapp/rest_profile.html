@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Foodex - Online Food Delivery</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/open-iconic-bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/animate.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/owl.carousel.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/owl.theme.default.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/magnific-popup.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/aos.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/ionicons.min.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/bootstrap-datepicker.css" %}">
+    <link rel="stylesheet" href="{% static "css/jquery.timepicker.css" %}">
+
+
+    <link rel="stylesheet" href="{% static "css/flaticon.css" %}">
+    <link rel="stylesheet" href="{% static "css/icomoon.css" %}">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <link rel="stylesheet" href="{% static "css/index.css" %}">
+    <link rel="stylesheet" href="{% static "css/table_profile.css" %}">
+
+
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'rest_index' %}"><span
+                class="flaticon-pizza-1 mr-1"></span>Foodex<br><small>Always Delicious.</small></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="{% url 'rest_index' %}" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="{% url 'menu' %}" class="nav-link">Menu</a></li>
+                 <li class="nav-item"><a href="{% url 'orderlist' %}" class="nav-link">Order</a></li>
+                <li class="nav-item"><a href="{% url 'rest_profile' %}" class="nav-link">Profile</a></li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item"><a href="{% url 'logout_view' %}" class="nav-link">Logout</a></li>
+
+                {% else %}
+                    <div class="dropdown">
+                        <button class="dropbtn">Register</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'customer_register' %}">Customer</a>
+                            <a href="{% url 'restaurant_register' %}">Restaurant</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn">Login</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'customer_login' %}">Customer</a>
+                            <a href="{% url 'restaurant_login' %}">Restaurant</a>
+                        </div>
+                    </div>
+
+
+                {% endif %}
+                <li class="nav-item"><a href="{% url 'rest_index' %}" class="nav-link">Contact Us</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END nav -->
+<br>
+  <div class="container col-md-8">
+    <img src="{{restaurant.r_logo.url}}" alt="Avatar" width="290px" height="250px">
+  </div>
+  <br>
+	<div class="container col-md-8">
+		 
+		<div class="row">
+		<div class=" col-md-11 toppad">   
+   
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h1 ><strong>Restaurant Details</strong></h1>
+                          </div>
+              
+                          <div class="panel-body">
+                            <div class="row">
+
+                              <div class="col-9">
+                                <table class="table table-user-information">
+                                  <tbody>
+                                  	<tr>
+                                      <td> Restaurant Owner Name:</td>
+                                      <td>{{ restaurant_owner.f_name }}</td>
+                                    </tr>
+                                    <tr>
+                                      <td> Restaurant Owner Email:</td>
+                                      <td>{{ user.email }}</td>
+                                    </tr>
+                                    <tr>
+                                      <td>Name:</td>
+                                      <td>{{restaurant.name}}</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                      <td>Address:</td>
+                                      <td>{{restaurant.address}}</td>
+                                    </tr>
+                                    <tr>
+                                      <td>Phone Number:</td>
+                                      <td>{{restaurant.phone}}</td>
+                                    </tr>
+                                     <tr>
+                                      <td>Average Cost:</td>
+                                      <td>{{restaurant.avg_cost}}</td>
+                                    </tr>
+                                     <tr>
+                                      <td>Average Time:</td>
+                                      <td>{{restaurant.avg_time}}</td>
+                                    </tr>
+                                    <tr>
+                                      <td>Location:</td>
+                                      <td>{{restaurant.location}}</td>
+                                    </tr>
+                                
+                                  </tbody>
+                                </table>
+                                   <div class="container">
+{#                                <div class="row">#}
+{#                                  <div class="col">#}
+{#                                  <a class="btn btn-success btn-lg" href="#">Edit</a>#}
+{#                                </div>#}
+{#                                <!--<div class="col">#}
+{#                                   <a class="btn btn-success btn-lg" href="{%url 'index' %}">Complete profile</a>#}
+{#                                </div>-->#}
+{#                                </div>#}
+                          </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        </div>
+		</div>
+	</div>
+  <br>
+</body>

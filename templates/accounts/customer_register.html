@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FoodUs- register as a user</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{% static 'fonts/material-icon/css/material-design-iconic-font.min.css' %}">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'css/batman.css' %}">
+</head>
+
+<body>
+
+    <div class="main">
+
+        <div class="container">
+            <div class="signup-content">
+                <form id="signup-form" class="signup-form" role="form" action="" method="post"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h2>Sign up as a Customer</h2>
+                    <p class="desc">Enter Email Id and password</p>
+
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="username" id="username" placeholder="Username"
+                            required />
+                        {% if 'username' in form.errors %}
+                        {% for error in form.username.errors %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-input" name="email" id="email" placeholder="Email" required />
+                        {% if 'email' in form.errors %}
+                        {% for error in form.email.errors %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="password1" id="password1" placeholder="Password"
+                            required />
+                        <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                        {% if 'password1' in form.errors %}
+                        {% for error in form.password1.errors %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="password2" id="password2"
+                            placeholder="Confirm Password" required />
+                        <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                        {% if 'password2' in form.errors %}
+                        {% for error in form.password2.errors %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="submit" id="submit" class="form-submit submit" value="Continue" />
+                        <a href="{% url 'accounts:login' %}" class="submit-link submit">Sign in</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="{% static ' vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static ' js/batman.js' %}"></script>
+</body>
+
+</html>

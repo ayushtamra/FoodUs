@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Foodex - Sign In as a Restaurant</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="{% static "images/icons/favicon.ico" %}"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static "fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static "vendor/animate/animate.css" %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static "vendor/css-hamburgers/hamburgers.min.css" %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static "vendor/animsition/css/animsition.min.css" %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static "vendor/select2/select2.min.css" %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static "vendor/daterangepicker/daterangepicker.css" %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static "css/util.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}">
+    <!--===============================================================================================-->
+</head>
+<body>
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form class="login100-form validate-form p-l-55 p-r-55 p-t-178" role="form" action="#" method="post"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                <span class="login100-form-title">
+						Sign In As A Restaurant Owner
+					</span>
+                <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter email">
+                    <input class="input100" type="text" name="email" placeholder="Email Id">
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Please enter password">
+                    <input class="input100" type="password" name="pass" placeholder="Password">
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <button type="submit" class="login100-form-btn">Sign In</button>
+
+                </div>
+
+                <div class="flex-col-c p-t-170 p-b-40">
+						<span class="txt1 p-b-9">
+							Don’t have an account?
+						</span>
+
+                    <a href="{% url "restaurant_register" %}" class="txt3">
+                        Sign up now
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--===============================================================================================-->
+<script src="{% static "vendor/jquery/jquery-3.2.1.min.js" %}"></script>
+<!--===============================================================================================-->
+<script src="{% static "vendor/animsition/js/animsition.min.js" %}"></script>
+<!--===============================================================================================-->
+<script src="{% static "vendor/bootstrap/js/popper.js" %}"></script>
+<script src="{% static "vendor/bootstrap/js/bootstrap.min.js" %}"></script>
+<!--===============================================================================================-->
+<script src="{% static "vendor/select2/select2.min.js" %}"></script>
+<!--===============================================================================================-->
+<script src="{% static "vendor/daterangepicker/moment.min.js" %}"></script>
+<script src="{% static "vendor/daterangepicker/daterangepicker.js" %}"></script>
+<!--===============================================================================================-->
+<script src="{% static "vendor/countdowntime/countdowntime.js" %}"></script>
+<!--===============================================================================================-->
+<script src="{% static "js/login.js" %}"></script>
+
+</body>
+</html>
+
+
+{#{% extends 'webapp/base.html'%}#}
+{#{% block title %}Log In{% endblock %}#}
+{##}
+{#{% block body %}#}
+{#<div class="container col-md-8">#}
+{##}
+{#    <div class="row">#}
+{#        <div class="col-sm-12 col-md-6 col-md-offset-3">#}
+{#            <div class="panel panel-default">#}
+{#                <div class="panel-body">#}
+{#                    <br>#}
+{#                    <br>#}
+{#                    <br>#}
+{#                    <br>#}
+{#                    <h3 class="col-sm-4 col-md-offset-4">Log In</h3>#}
+{#                    {% if error_message %}#}
+{#                        <p><strong>{{ error_message }}</strong></p>#}
+{#                    {% endif %}#}
+{#                    <br>#}
+{#                    <form class="form-horizontal" role="form" action="#" method="post" enctype="multipart/form-data">#}
+{#                        {% csrf_token %}#}
+{#                        <div class="form-group">#}
+{#                            <label class="control-label col-sm-2" for="id_username">#}
+{#                                Username:#}
+{#                            </label>#}
+{#                            <div class="col-sm-6">#}
+{#                                <input id="id_username" maxlength="30" name="username" type="text">#}
+{#                            </div> #}
+{#                        </div>#}
+{#                        <div class="form-group">#}
+{#                            <label class="control-label col-sm-2" for="id_password">#}
+{#                                Password:#}
+{#                            </label>#}
+{#                            <div class="col-sm-7">#}
+{#                                <input id="id_password" maxlength="30" name="password" type="password">#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="form-group">#}
+{#                            <div class="col-sm-offset-2 col-sm-10">#}
+{#                                <button type="submit" class="btn btn-success">Submit</button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </form>#}
+{#                </div>#}
+{#                <div class="panel-footer">#}
+{#                    Don't have an account? <a href="{% url 'register' %}">Click here</a> to register.#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#</div>#}
+{#<br>#}
+{#<br>#}
+{#{% endblock %}#}
+{##}

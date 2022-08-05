@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Foodex - Online Food Delivery</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/open-iconic-bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/animate.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/owl.carousel.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/owl.theme.default.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/magnific-popup.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/aos.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/ionicons.min.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/bootstrap-datepicker.css" %}">
+    <link rel="stylesheet" href="{% static "css/jquery.timepicker.css" %}">
+
+
+    <link rel="stylesheet" href="{% static "css/flaticon.css" %}">
+    <link rel="stylesheet" href="{% static "css/icomoon.css" %}">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <link rel="stylesheet" href="{% static "css/index.css" %}">
+    <link rel="stylesheet" href="{% static "css/table_profile.css" %}">
+    <link rel="stylesheet" href="{% static "css/rating.css" %}">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}"><span
+                class="flaticon-pizza-1 mr-1"></span>Foodex<br><small>Always Delicious.</small></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="menu.html" class="nav-link"></a></li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item"><a href="{% url 'logout_view' %}" class="nav-link">Logout</a></li>
+                    {% if request.user.is_customer %}
+                        <li class="nav-item"><a href="{% url 'restaurant_index' %}" class="nav-link">Restaurants</a>
+                        </li>
+                    {% endif %}
+                    {% if request.user.is_customer %}
+                        <li class="nav-item"><a href="{% url 'myorders' %}" class="nav-link">My Orders</a>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <div class="dropdown">
+                        <button class="dropbtn">Register</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'customer_register' %}">Customer</a>
+                            <a href="{% url 'restaurant_register' %}">Restaurant</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn">Login</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'customer_login' %}">Customer</a>
+                            <a href="{% url 'restaurant_login' %}">Restaurant</a>
+                        </div>
+                    </div>
+
+                {% endif %}
+                <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Contact Us</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END nav -->
+
+{% for order in orders %}
+    <div class="container">
+        <div class="col-md-12 restaurent-title">
+            <div class="logo-title" style="border: 0;">
+                <h3>Order: #{{ order.7 }}</h3>
+                <h5>Name: {{ order.0 }}</h5>
+                {#                             {% if order.8 == 1 %}#}
+                <h5>Status: {{ order.10 }}</h5>
+            </div>
+        </div>
+        <div class="col-md-12 order-form-grid  wow fadeInLeft">
+
+            <div>
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <th>
+                        Item Name
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    </thead>
+                    {% for x in order.2 %}
+                        <tr>
+                            <td>{{ x.0 }}</td>
+                            <td>{{ x.1 }}</td>
+                            <td>&#x20b9;{{ x.2 }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12 buy">
+            <h6>Cart Total: &#x20b9;{{ order.4 }}</h6>
+
+            <h6>Tax: &#x20b9;{{ order.5 }}</h6>
+                           <h6>Discount applied :  {{order.11}}</h6>
+
+            <h5>Total Amount: &#x20b9;{{ order.3 }}</h5>
+
+
+        </div>
+        <div class="col-md-12 buy" >
+             <span style="display: inline;">Rate and Review your Order:</span>
+            <form action="" method="POST">{% csrf_token %}
+
+                <fieldset class="rating">
+                    <input type="radio" id="star5" name="rating" value="5"/><label class="full" for="star5"
+                                                                                   title="Awesome - 5 stars"></label>
+                    <input type="radio" id="star4" name="rating" value="4"/><label class="full" for="star4"
+                                                                                   title="Pretty good - 4 stars"></label>
+                    <input type="radio" id="star3" name="rating" value="3"/><label class="full" for="star3"
+                                                                                   title="Meh - 3 stars"></label>
+                    <input type="radio" id="star2" name="rating" value="2"/><label class="full" for="star2"
+                                                                                   title="Kinda bad - 2 stars"></label>
+                    <input type="radio" id="star1" name="rating" value="1"/><label class="full" for="star1"
+                                                                                   title="Sucks big time - 1 star"></label>
+                </fieldset>
+                <input type="text" name="review" id="review" value="{{ order.9}}"/><p>   </p>
+                <input type="hidden" name="orderid" value="{{ order.7 }}">
+                <input type="submit" value="Submit" name="submit"/>
+                <br>
+            </form>
+             </div>
+
+
+        <div class="clearfix"></div>
+
+        <br>
+    </div>
+{% endfor %}
+{#{% endblock %}#}
+
+</body>

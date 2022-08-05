@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Foodex - Online Food Delivery</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/open-iconic-bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/animate.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/owl.carousel.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/owl.theme.default.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/magnific-popup.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/aos.css" %}">
+    <link rel="stylesheet" href="{% static "css/jj.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/ionicons.min.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/bootstrap-datepicker.css" %}">
+    <link rel="stylesheet" href="{% static "css/jquery.timepicker.css" %}">
+
+
+    <link rel="stylesheet" href="{% static "css/flaticon.css" %}">
+    <link rel="stylesheet" href="{% static "css/icomoon.css" %}">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <link rel="stylesheet" href="{% static "css/index.css" %}">
+
+    <link href="{% static "rcss/bootstrap.css" %}" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{% static "rcss/style.css" %}" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{% static "rcss/font-awesome.css" %}" rel="stylesheet">
+    <!--pop-up-box-->
+    <link href="{% static "rcss/popuo-box.css" %}" rel="stylesheet" type="text/css" media="all"/>
+    <!--//pop-up-box-->
+    <!-- price range -->
+    <link rel="stylesheet" type="text/css" href="{% static "rcss/jquery-ui1.css" %}">
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}"><span
+                class="flaticon-pizza-1 mr-1"></span>Foodex<br><small>Always Delicious.</small></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="menu.html" class="nav-link"></a></li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item"><a href="{% url 'logout_view' %}" class="nav-link">Logout</a></li>
+                    {% if request.user.is_customer %}
+                        <li class="nav-item"><a href="{% url 'restaurant_index' %}" class="nav-link">Restaurants</a>
+                        </li>
+                    {% endif %}
+                    {% if request.user.is_customer %}
+                        <li class="nav-item"><a href="{% url 'myorders' %}" class="nav-link">My Orders</a>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <div class="dropdown">
+                        <button class="dropbtn">Register</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'customer_register' %}">Customer</a>
+                            <a href="{% url 'restaurant_register' %}">Restaurant</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn">Login</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'customer_login' %}">Customer</a>
+                            <a href="{% url 'restaurant_login' %}">Restaurant</a>
+                        </div>
+                    </div>
+
+                {% endif %}
+                <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Contact Us</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END nav -->
+
+{#<section class="ftco-about d-md-flex">#}
+{#    <div class="one-half img" style="background-image: url({% static "images/about.jpg" %})"></div>#}
+{#    <div class="one-half ftco-animate">#}
+{#        <div class="heading-section ftco-animate ">#}
+{#            <h2 class="mb-4">Welcome to <span class="flaticon-pizza">FOODEX</span> Online Food Ordering</h2>#}
+{#        </div>#}
+{#        <div>#}
+{#            <p>Order food & beverages online from restaurants near & around you. We deliver food from your neighborhood#}
+{#                local joints, your favorite cafes, luxurious & elite restaurants in your area, and also from chains like#}
+{#                Dominos, KFC, Burger King, Pizza Hut, FreshMenu, Mc Donald's, Subway, Faasos, Cafe Coffee Day, Taco#}
+{#                Bell, and more. Exciting bit? We place no minimum order restrictions! Order in as little (or as much) as#}
+{#                you'd like. We'll Foodex it to you!</p>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+<div class="product-sec1">
+
+    {% if request.user.is_authenticated %}
+        <h3 class="heading-tittle">Restaurants in {{ location }}</h3>
+
+        {% for x in r_object %}
+            <div class="col-md-4 product-men">
+            <div class="men-pro-item simpleCart_shelfItem">
+                <div class="men-thumb-item">
+                    <img src="{{ x.r_logo.url }}" alt="" height="250 " width="290"
+                         style="border-radius: 8px; border: 1px solid #ddd;">
+                    <div class="men-cart-pro">
+                        <div class="inner-men-cart-pro">
+                            <a href="{% url 'menu' x.restaurant_id %}" class="link-product-add-cart">Order</a>
+                        </div>
+                    </div>
+                    {% if x.is_exclusive == True %}
+                        <span class="product-new-top">Exclusive</span>
+                    {% endif %}
+                </div>
+                <div class="item-info-product ">
+                    <h4>
+                        <a href={% url 'menu' x.restaurant_id %}>{{ x.name }}</a>
+
+                        {#                    <a href={% url 'index' %}>{{x.name }}</a>#}
+                    </h4>
+
+                    <h4>
+                        <a href={% url 'menu' x.restaurant_id %}>Avg Cost : &#x20b9; {{ x.avg_cost }}</a>
+                    </h4>
+                    {# <td><a href="{% url 'ajax_is_favorite' x.restaurant_id  %}"  class="btn btn-default btn-sm btn-favorite" role="button"><span class=" glyphicon glyphicon-star {% if x.is_favorite %}active{% endif %}" action=""></span></a></td>#}
+
+
+                    <h4>
+                        <a href={% url 'menu' x.restaurant_id %}>Avg Time : {{ x.avg_time }} mins</a>
+                    </h4>
+                </div>
+                {#                <div class="info-product-price">#}
+
+
+            </div>
+            {#{% temp = False %}#}
+{#            {% with t=0 %}#}
+{#                {% for y in fav %}#}
+{#                    {% if y.restaurant_id == x.restaurant_id %}#}
+{#                        {%  %}#}
+                        {#                                                    <input value="Fav" class="btn-danger">#}
+{#                    {% endif %}#}
+{#                {% endfor %}#}
+{#                {% if t == 0 %}#}
+{#                    <div style="display: none;">#}
+{#                {% else %}#}
+{#                    <div>#}
+{#                {% endif %}#}
+{##}
+            {#            	<span href="" class="favme dashicons dashicons-heart"></span>#}
+            {#<div id="gh"></div>#}
+{#            <form action="" method="POST">{% csrf_token %}#}
+{#                <input type="hidden" value="{{ x.restaurant_id }}" name="rest_id">#}
+{#                <input type="hidden" value="{{ user_id }}" name="user_id">#}
+{#                <input type="submit" value="Fav" name="submit" class="btn-danger">#}
+{#            </form>#}
+{#            </div>#}
+{#            {% endwith %}#}
+        {#            #}
+        {#             <form id="form_id" method='post'>{% csrf_token %}#}
+        {#                                                    <input type="hidden" value="{{ x.restaurant_id }}" name="rest">#}
+        {#     <button type="submit">Favourite</button>#}
+        {# </form>#}
+        </div>
+        {% endfor %}
+    {% else %}
+        {#else display dropdown select tag and then select the location and restaurants of that location #}
+        <h3 class="heading-tittle">Sorry, we are unable to show restaurants. Please Login to view restaurants in your
+            area :)</h3>
+
+    {% endif %}
+
+    {#    </div>#}
+    <div class="clearfix"></div>
+    </div>
+
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    <script src="{% static "js/jquery-migrate-3.0.1.min.js" %}"></script>
+    <script src="{% static "js/popper.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/jquery.easing.1.3.js" %}"></script>
+    <script src="{% static "js/jquery.waypoints.min.js" %}"></script>
+    <script src="{% static "js/jquery.stellar.min.js" %}"></script>
+    <script src="{% static "js/owl.carousel.min.js" %}"></script>
+    <script src="{% static "js/jquery.magnific-popup.min.js" %}"></script>
+    <script src="{% static "js/aos.js" %}"></script>
+    <script src="{% static "js/jquery.animateNumber.min.js" %}"></script>
+    <script src="{% static "js/bootstrap-datepicker.js" %}"></script>
+    <script src="{% static "js/jquery.timepicker.min.js" %}"></script>
+    <script src="{% static "js/scrollax.min.js" %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="{% static "js/google-map.js" %}"></script>
+    <script src="{% static "js/main.js" %}"></script>
+    <script src="{% static "rjs/bootstrap.js" %}"></script>
+
+
+    <script src="{% static "rjs/jquery-2.1.4.min.js" %}"></script>
+    <!-- //jquery -->
+
+    <!-- popup modal (for signin & signup)-->
+    <script src="{% static "rjs/jquery.magnific-popup.js" %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.popup-with-zoom-anim').magnificPopup({
+                type: 'inline',
+                fixedContentPos: false,
+                fixedBgPos: true,
+                overflowY: 'auto',
+                closeBtnInside: true,
+                preloader: false,
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-zoom-in'
+            });
+
+        });
+    </script>
+    <!-- Large modal -->
+    <!-- <script>
+        $('#').modal('show');
+    </script> -->
+    <!-- //popup modal (for signin & signup)-->
+
+    <!-- cart-js -->
+    <script src="{% static "rjs/minicart.js" %}"></script>
+    <script>
+        paypalm.minicartk.render(); //use only unique class names other than paypalm.minicartk.Also Replace same class name in css and minicart.min.js
+
+        paypalm.minicartk.cart.on('checkout', function (evt) {
+            var items = this.items(),
+                len = items.length,
+                total = 0,
+                i;
+
+            // Count the number of each item in the cart
+            for (i = 0; i < len; i++) {
+                total += items[i].get('quantity');
+            }
+
+            if (total < 3) {
+                alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
+                evt.preventDefault();
+            }
+        });
+    </script>
+    <!-- //cart-js -->
+
+    <!-- price range (top products) -->
+    <script src="{% static "rjs/jquery-ui.js" %}"></script>
+    <script>
+        //<![CDATA[
+        $(window).load(function () {
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 9000,
+                values: [50, 6000],
+                slide: function (event, ui) {
+                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                }
+            });
+            $("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
+
+        }); //]]>
+    </script>
+    <!-- //price range (top products) -->
+
+    <!-- flexisel (for special offers) -->
+    <script src="{% static "rjs/jquery.flexisel.js" %}"></script>
+    <script>
+        $(window).load(function () {
+            $("#flexiselDemo1").flexisel({
+                visibleItems: 3,
+                animationSpeed: 1000,
+                autoPlay: true,
+                autoPlaySpeed: 3000,
+                pauseOnHover: true,
+                enableResponsiveBreakpoints: true,
+                responsiveBreakpoints: {
+                    portrait: {
+                        changePoint: 480,
+                        visibleItems: 1
+                    },
+                    landscape: {
+                        changePoint: 640,
+                        visibleItems: 2
+                    },
+                    tablet: {
+                        changePoint: 768,
+                        visibleItems: 2
+                    }
+                }
+            });
+
+        });
+    </script>
+    <!-- //flexisel (for special offers) -->
+
+    <!-- password-script -->
+    <script>
+        window.onload = function () {
+            document.getElementById("password1").onchange = validatePassword;
+            document.getElementById("password2").onchange = validatePassword;
+        }
+
+        function validatePassword() {
+            var pass2 = document.getElementById("password2").value;
+            var pass1 = document.getElementById("password1").value;
+            if (pass1 != pass2)
+                document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+            else
+                document.getElementById("password2").setCustomValidity('');
+            //empty string means no validation error
+        }
+    </script>
+    <!-- //password-script -->
+
+    <!-- smoothscroll -->
+    <script src="{% static "rjs/SmoothScroll.min.js" %}"></script>
+    <!-- //smoothscroll -->
+
+    <!-- start-smooth-scrolling -->
+    <script src="{% static "rjs/move-top.js" %}"></script>
+    <script src="{% static "rjs/easing.js" %}"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 1000);
+            });
+        });
+    </script>
+    <!-- //end-smooth-scrolling -->
+
+    <!-- smooth-scrolling-of-move-up -->
+    <script>
+        $(document).ready(function () {
+            /*
+            var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+            */
+            $().UItoTop({
+                easingType: 'easeOutQuart'
+            });
+
+        });
+    </script>
+
+    {#<script>#}
+    {#$.ajax({#}
+    {#    url : "{% url 'ajax_is_favorite'%}",#}
+    {#    data: {#}
+    {#        'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),#}
+    {#        'rest_id': 'here you get the id',#}
+    {#        'user_id': ' s'#}
+    {#        'isFavorite': true //or false#}
+    {#    },#}
+    {#    type : 'POST',#}
+    {#    dataType : 'json',#}
+    {#    success : function(json) {#}
+    {#        if(json.success === true){#}
+    {#            // do somthing#}
+    {#        }else{#}
+    {#            // do somthing#}
+    {#        }#}
+    {#    }#}
+    {#});#}
+    {#</script>#}
+
+
+    {#<script>$("#form_id").on('submit', function(event) {#}
+    {#       event.preventDefault();#}
+    {#var rest_id = document.getElementById("form_id").attributes["rest"].value;#}
+    {##}
+    {#'{{ x.restaurant_id }}';#}
+    {#var user_id = '{{ user_id }}';#}
+    {##}
+    {#       $.ajax({#}
+    {#           type: "POST",#}
+    {#url: "/home/favoriteAjax/",#}
+    {#           url: "{% url 'favorite_ajax' %}",#}
+    {#           data:{#}
+    {#  rest_id:rest_id,#}
+    {#user_id:user_id,#}
+    {#                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()#}
+    {#           },#}
+    {#           datatype:'json',#}
+    {#           success: function(data) {#}
+    {#             if (data['success'])#}
+    {#                alert("successfully added to favorites")#}
+    {#           }#}
+    {#       });#}
+    {#  });</script>#}
+</body>
+</html>

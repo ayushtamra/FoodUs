@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Foodex - Online Food Delivery</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/open-iconic-bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/animate.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/owl.carousel.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/owl.theme.default.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/magnific-popup.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/aos.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/ionicons.min.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/bootstrap-datepicker.css" %}">
+    <link rel="stylesheet" href="{% static "css/jquery.timepicker.css" %}">
+
+
+    <link rel="stylesheet" href="{% static "css/flaticon.css" %}">
+    <link rel="stylesheet" href="{% static "css/icomoon.css" %}">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <link rel="stylesheet" href="{% static "css/index.css" %}">
+    <link rel="stylesheet" href="{% static "css/table_profile.css" %}">
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'rest_index' %}"><span
+                class="flaticon-pizza-1 mr-1"></span>Foodex<br><small>Always Delicious.</small></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="{% url 'rest_index' %}" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="{% url 'menu' %}" class="nav-link">Menu</a></li>
+                 <li class="nav-item"><a href="{% url 'orderlist' %}" class="nav-link">Order</a></li>
+                <li class="nav-item"><a href="{% url 'rest_profile' %}" class="nav-link">Profile</a></li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item"><a href="{% url 'logout_view' %}" class="nav-link">Logout</a></li>
+
+                {% else %}
+                    <div class="dropdown">
+                        <button class="dropbtn">Register</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'customer_register' %}">Customer</a>
+                            <a href="{% url 'restaurant_register' %}">Restaurant</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn">Login</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'customer_login' %}">Customer</a>
+                            <a href="{% url 'restaurant_login' %}">Restaurant</a>
+                        </div>
+                    </div>
+
+
+                {% endif %}
+                <li class="nav-item"><a href="{% url 'rest_index' %}" class="nav-link">Contact Us</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END nav -->
+
+<div class="container">
+    {#		<input id="tab1" type="radio" name="tabs" checked>#}
+    {#  	<label for="tab1">Modify Menu</label>#}
+    {##}
+    {#  	<input id="tab2" type="radio" name="tabs">#}
+    {#  	<label for="tab2">Add Items</label>#}
+    {##}
+    {#	<input id="tab3" type="radio" name="tabs">#}
+    {#  	<label for="tab3">Delete Items</label>#}
+
+ <section id="content1">
+        <div class="order-top" style="border:0">
+            <p>
+            <h4>Offers Available</h4>
+            <h4>Offers Applied: #{{ applied.offer_id }} Amount: {{ applied.discount }}</h4>
+
+            <table class="table table-hover table-bordered">
+                <thead>
+                <th>Offer Id</th>
+                <th>Discount</th>
+                <th></th>
+                </thead>
+                {% for x in offer %}
+                     <tr>
+                        <td>{{ x.offer_id }}</td>
+                        <td>{{ x.discount }}</td>
+                        <td>
+                            <form action="" method="POST">{% csrf_token %}
+                                <input type="hidden" value="{{ x.offer_id }}" name="offerid">
+                                <input type="submit" value="Select" name="submit" class="btn btn-primary btn-lg">
+
+                            </form>
+                        </td>
+
+                     </tr>
+                {% endfor %}
+            </table>
+            </p>
+        </div>
+    </section>
+
+
+    <section id="content1">
+        <div class="order-top" style="border:0">
+            <p>
+            <h4>Modify Items</h4>
+            <table class="table table-hover table-bordered">
+                <thead>
+                <th>Item Name</th>
+                <th>Price</th>
+                <th>Veg/Non Veg</th>
+                <th>Type</th>
+                <th></th>
+                </thead>
+                {% for x in menu %}
+                    <tr>
+                        <form id="submit" role="form" action="#" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <td><input type="text" value="{{ x.1 }}" name="name"/></td>
+                            <td><input type="number" value="{{ x.2 }}" name="cost"/></td>
+
+                            <td><select name="is_veg" id="is_veg" required>
+                                <option value="{{ x.4 }}"> {{ x.7 }}</option>
+                                {% for z in vegarray %}
+                                    {% if z.0 != x.4 %}
+                                        <option value="{{ z.0 }}">{{ z.1 }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            </td>
+{#                            <td><input type="text" value="{{ x.4 }}" name="is_veg"/></td>#}
+
+                            <td><select name="type" id="type" required>
+                                <option value="{{ x.6 }}">{{ x.5 }}</option>
+                                {% for y in itemtypes %}
+                                    {% if y.0 != x.6 %}
+                                        <option value="{{ y.0 }}">{{ y.1 }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        <td>
+                                <input type="hidden" value="{{ x.0 }}" name="fooditemid">
+                                <input type="submit" name="submit" id="submit" class="btn  btn-primary btn-lg"
+                                       value="Modify"/>
+                            </td>
+                        </form>
+                    </tr>
+                {% endfor %}
+            </table>
+            </p>
+        </div>
+    </section>
+
+
+
+    <section id="content2">
+        <div class="order-top" style="border:0">
+            <p>
+            <h4>Add Item</h4>
+            <table class="table table-hover table-bordered">
+                <thead>
+                <th>Item Name</th>
+                <th>Price</th>
+                <th>Veg/Non Veg</th>
+                <th>Type</th>
+                <th></th>
+                </thead>
+                <tr>
+                    <form id="submit" role="form" action="#" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {#                            <td>#}
+                        {#                                <select name="item" class="btn btn-primary btn-lg">#}
+                        {#                                    {% for x in items %}#}
+                        {#                                        <option value="{{ x.0 }}">{{ x.1 }}</option>#}
+                        {#                                    {% endfor %}#}
+                        {#                                </select>#}
+                        {#                            </td>#}
+                        <td><input type="text" name="name" id="name"/></td>
+                        <td><input type="number" id="cost" name="cost"/></td>
+                        <td><select name="is_veg" id="is_veg" required>
+                            <option value="1">veg</option>
+                            <option value="0">non veg</option>
+                        </select>
+                        </td>
+
+                           <td><select name="type_id" id="type_id" required>
+                                <option value="{{ x.6 }}">{{ x.5 }}</option>
+                                {% for y in itemtypes %}
+                                    {% if y.0 != x.6 %}
+                                        <option value="{{ y.0 }}">{{ y.1 }}</option>
+                                    {% endif %}
+                                {% endfor %}</select>
+                            </td>
+                         <td>
+                            <input type="submit" name="submit" id="submit" class="btn  btn-primary btn-lg"
+                                   value="Add"/>
+                        </td>
+                    </form>
+                </tr>
+            </table>
+            </p>
+        </div>
+    </section>
+    <section id="content3">
+        <div class="order-top" style="border:0">
+            <p>
+            <h4>Delete Item</h4>
+            <table class="table table-hover table-bordered">
+                <thead>
+                <th>Item Name</th>
+                <th>Price</th>
+                <th>Veg/Non Veg</th>
+                <th>Type</th>
+                <th></th>
+                </thead>
+                {% for x in menu %}
+                    <tr>
+                        <td>{{ x.1 }}</td>
+                        <td>{{ x.2 }}</td>
+                        <td>{{ x.3 }}</td>
+                        <td>{{ x.4 }}</td>
+
+
+                        <td>
+                            <form action="" method="POST">{% csrf_token %}
+                                <input type="hidden" value="{{ x.0 }}" name="fooditemid">
+                                <input type="submit" value="Delete" name="submit" class="btn btn-danger btn-lg">
+
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            </p>
+        </div>
+    </section>
+</div>
+
+</body>

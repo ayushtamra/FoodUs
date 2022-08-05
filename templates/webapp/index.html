@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Foodex - Online Food Delivery</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/open-iconic-bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/animate.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/owl.carousel.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/owl.theme.default.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/magnific-popup.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/aos.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/ionicons.min.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/bootstrap-datepicker.css" %}">
+    <link rel="stylesheet" href="{% static "css/jquery.timepicker.css" %}">
+
+
+    <link rel="stylesheet" href="{% static "css/flaticon.css" %}">
+    <link rel="stylesheet" href="{% static "css/icomoon.css" %}">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <link rel="stylesheet" href="{% static "css/index.css" %}">
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}"><span
+                class="flaticon-pizza-1 mr-1"></span>Foodex<br><small>Always Delicious.</small></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="menu.html" class="nav-link"></a></li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item"><a href="{% url 'logout_view' %}" class="nav-link">Logout</a></li>
+                    {% if request.user.is_customer %}
+                        <li class="nav-item"><a href="{% url 'restaurant_index' %}" class="nav-link">Restaurants</a>
+                        </li>
+                    {% endif %}
+                    {% if request.user.is_customer %}
+                        <li class="nav-item"><a href="{% url 'myorders' %}" class="nav-link">My Orders</a>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <div class="dropdown">
+                        <button class="dropbtn">Register</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'customer_register' %}">Customer</a>
+                            <a href="{% url 'restaurant_register' %}">Restaurant</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn">Login</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'customer_login' %}">Customer</a>
+                            <a href="{% url 'restaurant_login' %}">Restaurant</a>
+                        </div>
+                    </div>
+
+                {% endif %}
+                <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Contact Us</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END nav -->
+
+<section class="home-slider owl-carousel img" style="background-image: url({% static "images/bg_1.jpg" %});">
+    <div class="slider-item">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row slider-text align-items-center" data-scrollax-parent="true">
+
+                <div class="col-md-6 col-sm-12 ftco-animate">
+                    <span class="subheading">Hungry?</span>
+                    <h1 class="mb-4">Order on Foodex</h1>
+                    <p class="mb-4 mb-md-5">Order from restaurants in your location and enjoy delicious food.</p>
+
+                </div>
+                <div class="col-md-6 ftco-animate">
+                    <img src="{% static "images/x1.png" %}" class="img-fluid" alt="">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="slider-item">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row slider-text align-items-center" data-scrollax-parent="true">
+
+                <div class="col-md-6 col-sm-12 order-md-last ftco-animate">
+                    <span class="subheading">DELICIOUS FOOD</span>
+                    <h1 class="mb-4">ALL CUISINES</h1>
+                    <p class="mb-4 mb-md-5">We have a large variety of mouth watering Food Items from all cuisines.</p>
+                    {#                    <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="#"#}
+                    {#                                                                                                class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View#}
+                    {#                        Menu</a></p>#}
+                </div>
+                <div class="col-md-6 ftco-animate">
+                    <img src="{% static "images/bg_1.png" %}" class="img-fluid" alt="">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="slider-item" style="background-image: url({% static "images/bg_3.jpg" %});">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+
+                <div class="col-md-7 col-sm-12 text-center ftco-animate">
+                    <span class="subheading">WELCOME</span>
+                    {#                    <h1 class="mb-4">ALL CUISINES</h1>#}
+
+                    {#                    <span class="subheading">Welcome</span>#}
+                    <h1 class="mb-4">Food ordering in few simple steps</h1>
+                    <p class="mb-4 mb-md-5">Foodex is the best online food ordering portal - Ranked #1 by Food
+                        Association of India. We focus on customers and their satisfaction.</p>
+                    {#                    <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="#"#}
+                    {#                                                                                                class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View#}
+                    {#                        Menu</a></p>#}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-intro">
+    <div class="container-wrap">
+        <div class="wrap d-md-flex">
+            <div class="info">
+                <div class="row no-gutters">
+                    <div class="col-md-4 d-flex ftco-animate">
+                        <div class="icon"><span class="icon-phone"></span></div>
+                        <div class="text">
+                            <h3>000 (123) 456 7890</h3>
+                            <p>Call us for any issues /suggestions</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 d-flex ftco-animate">
+                        <div class="icon"><span class="icon-my_location"></span></div>
+                        <div class="text">
+                            <h3>198 West Street, Bangalore</h3>
+                            <p>Head Quarters</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 d-flex ftco-animate">
+                        <div class="icon"><span class="icon-clock-o"></span></div>
+                        <div class="text">
+                            <h3>Open 24 x 7</h3>
+                            {#                            <p>8:00am - 9:00pm</p>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="social d-md-flex pl-md-5 p-4 align-items-center">
+                <ul class="social-icon">
+                    <li class="ftco-animate"><a href="https://fb.com/manasgupta11"><span
+                            class="icon-twitter"></span></a></li>
+                    <li class="ftco-animate"><a href="https://fb.com/manasgupta11"><span
+                            class="icon-facebook"></span></a></li>
+                    <li class="ftco-animate"><a href="https://fb.com/manasgupta11"><span class="icon-instagram"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-about d-md-flex">
+    <div class="one-half img" style="background-image: url({% static "images/about.jpg" %})"></div>
+    <div class="one-half ftco-animate">
+        <div class="heading-section ftco-animate ">
+            <h2 class="mb-4">Welcome to <span class="flaticon-pizza">FOODEX</span> Online Food Ordering</h2>
+        </div>
+        <div>
+            <p>Order food & beverages online from restaurants near & around you. We deliver food from your neighborhood
+                local joints, your favorite cafes, luxurious & elite restaurants in your area, and also from chains like
+                Dominos, KFC, Burger King, Pizza Hut, FreshMenu, Mc Donald's, Subway, Faasos, Cafe Coffee Day, Taco
+                Bell, and more. Exciting bit? We place no minimum order restrictions! Order in as little (or as much) as
+                you'd like. We'll Foodex it to you!</p>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section ftco-services">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 heading-section ftco-animate text-center">
+                <h2 class="mb-4">Our Services</h2>
+                <p>At Foodex, we are dedicated to deliver food and provide best customer experience.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 ftco-animate">
+                <div class="media d-block text-center block-6 services">
+                    <div class="icon d-flex justify-content-center align-items-center mb-5">
+                        <span class="flaticon-diet"></span>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="heading">All Types Of Food</h3>
+                        <p>All types of food and food items are delivered at your doorstep.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 ftco-animate">
+                <div class="media d-block text-center block-6 services">
+                    <div class="icon d-flex justify-content-center align-items-center mb-5">
+                        <span class="flaticon-bicycle"></span>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="heading">Fastest Delivery</h3>
+                        <p>Well organized delivery system with super fast service.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 ftco-animate">
+                <div class="media d-block text-center block-6 services">
+                    <div class="icon d-flex justify-content-center align-items-center mb-5"><span
+                            class="flaticon-pizza-1"></span></div>
+                    <div class="media-body">
+                        <h3 class="heading">Huge Variety of Food</h3>
+                        <p>Choose from a variety of restaurants and cuisines</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="ftco-counter ftco-bg-dark img" id="section-counter"
+         style="background-image: url({% static "images/bg_2.jpg" %});" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+                        <div class="block-18 text-center">
+                            <div class="text">
+                                <div class="icon"><span class="flaticon-pizza-1"></span></div>
+                                <strong class="number" data-number="30">0</strong>
+                                <span>Cities</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+                        <div class="block-18 text-center">
+                            <div class="text">
+                                <div class="icon"><span class="flaticon-medal"></span></div>
+                                <strong class="number" data-number="25">0</strong>
+                                <span>Number of Awards</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+                        <div class="block-18 text-center">
+                            <div class="text">
+                                <div class="icon"><span class="flaticon-laugh"></span></div>
+                                <strong class="number" data-number="10023">0</strong>
+                                <span>Happy Customers</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 d-flex justify-content-center counter-wrap ftco-animate">
+                        <div class="block-18 text-center">
+                            <div class="text">
+                                <div class="icon"><span class="flaticon-chef"></span></div>
+                                <strong class="number" data-number="1200">0</strong>
+                                <span>Delivery Staff</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<footer class="ftco-footer ftco-section img">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-3 col-md-6 mb-5 mb-md-5">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">About Us</h2>
+                    <p>Foodex - Best online food ordering portal - Ranked #1 by Food Association of India. We focus on
+                        customers and their satisfaction.</p>
+
+                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                        <li class="ftco-animate"><a href="https://fb.com/manasgupta11"><span
+                                class="icon-twitter"></span></a></li>
+                        <li class="ftco-animate"><a href="https://fb.com/manasgupta11"><span
+                                class="icon-facebook"></span></a></li>
+                        <li class="ftco-animate"><a href="https://fb.com/manasgupta11"><span
+                                class="icon-instagram"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-5 mb-md-5">
+                {#                <div class="ftco-footer-widget mb-4">#}
+                {#                    <h2 class="ftco-heading-2">Recent Blog</h2>#}
+                {#                    <div class="block-21 mb-4 d-flex">#}
+                {#                        <a class="blog-img mr-4" style="background-image: url({% static "images/image_1.jpg" %});"></a>#}
+                {#                        <div class="text">#}
+                {#                            <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>#}
+                {#                            <div class="meta">#}
+                {#                                <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>#}
+                {#                                <div><a href="#"><span class="icon-person"></span> Admin</a></div>#}
+                {#                                <div><a href="#"><span class="icon-chat"></span> 19</a></div>#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                    <div class="block-21 mb-4 d-flex">#}
+                {#                        <a class="blog-img mr-4" style="background-image: url({% static "images/image_2.jpg" %});"></a>#}
+                {#                        <div class="text">#}
+                {#                            <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>#}
+                {#                            <div class="meta">#}
+                {#                                <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>#}
+                {#                                <div><a href="#"><span class="icon-person"></span> Admin</a></div>#}
+                {#                                <div><a href="#"><span class="icon-chat"></span> 19</a></div>#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                </div>#}
+            </div>
+            <div class="col-lg-2 col-md-6 mb-5 mb-md-5">
+                {#                <div class="ftco-footer-widget mb-4 ml-md-4">#}
+                {#                    <h2 class="ftco-heading-2">Services</h2>#}
+                {#                    <ul class="list-unstyled">#}
+                {#                        <li><a href="#" class="py-2 d-block">Cooked</a></li>#}
+                {#                        <li><a href="#" class="py-2 d-block">Deliver</a></li>#}
+                {#                        <li><a href="#" class="py-2 d-block">Quality Foods</a></li>#}
+                {#                        <li><a href="#" class="py-2 d-block">Mixed</a></li>#}
+                {#                    </ul>#}
+                {#                </div>#}
+            </div>
+            <div class="col-lg-3 col-md-6 mb-5 mb-md-5">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Have Questions?</h2>
+                    <div class="block-23 mb-3">
+                        <ul>
+                            <li><span class="icon icon-map-marker"></span><span class="text">198 West Street, Bangalore, India</span>
+                            </li>
+                            <li>><span class="icon icon-phone"></span><span
+                                    class="text">+91 01923920120</span></li>
+                            <li><span class="icon icon-envelope"></span><span class="text">service@foodex.com</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00"/>
+    </svg>
+</div>
+
+
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/jquery-migrate-3.0.1.min.js" %}"></script>
+<script src="{% static "js/popper.min.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+<script src="{% static "js/jquery.easing.1.3.js" %}"></script>
+<script src="{% static "js/jquery.waypoints.min.js" %}"></script>
+<script src="{% static "js/jquery.stellar.min.js" %}"></script>
+<script src="{% static "js/owl.carousel.min.js" %}"></script>
+<script src="{% static "js/jquery.magnific-popup.min.js" %}"></script>
+<script src="{% static "js/aos.js" %}"></script>
+<script src="{% static "js/jquery.animateNumber.min.js" %}"></script>
+<script src="{% static "js/bootstrap-datepicker.js" %}"></script>
+<script src="{% static "js/jquery.timepicker.min.js" %}"></script>
+<script src="{% static "js/scrollax.min.js" %}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="{% static "js/google-map.js" %}"></script>
+<script src="{% static "js/main.js" %}"></script>
+
+</body>
+</html>

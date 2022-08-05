@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Foodex - Online Food Delivery</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/open-iconic-bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/animate.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/owl.carousel.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/owl.theme.default.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/magnific-popup.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/aos.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/ionicons.min.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/bootstrap-datepicker.css" %}">
+    <link rel="stylesheet" href="{% static "css/jquery.timepicker.css" %}">
+
+
+    <link rel="stylesheet" href="{% static "css/flaticon.css" %}">
+    <link rel="stylesheet" href="{% static "css/icomoon.css" %}">
+    <link rel="stylesheet" href="{% static "css/op.css" %}">
+    <link rel="stylesheet" href="{% static "css/alpha.css" %}">
+    <link rel="stylesheet" href="{% static "css/hj.css" %}">
+
+{#            <link rel="stylesheet" href="{% static "css/index.css" %}">#}
+    {#    <link rel="stylesheet" href="{% static "css/table_profile.css" %}">#}
+
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}"><span
+                class="flaticon-pizza-1 mr-1"></span>Foodex<br><small>Always Delicious.</small></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="menu.html" class="nav-link"></a></li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item"><a href="{% url 'logout_view' %}" class="nav-link">Logout</a></li>
+                    {% if request.user.is_customer %}
+                        <li class="nav-item"><a href="{% url 'restaurant_index' %}" class="nav-link">Restaurants</a>
+                        </li>
+                    {% endif %}
+                    {% if request.user.is_customer %}
+                        <li class="nav-item"><a href="{% url 'myorders' %}" class="nav-link">My Orders</a>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <div class="dropdown">
+                        <button class="dropbtn">Register</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'customer_register' %}">Customer</a>
+                            <a href="{% url 'restaurant_register' %}">Restaurant</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn">Login</button>
+                        <div class="dropdown-content">
+                            <a href="{% url 'customer_login' %}">Customer</a>
+                            <a href="{% url 'restaurant_login' %}">Restaurant</a>
+                        </div>
+                    </div>
+
+                {% endif %}
+                <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Contact Us</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END nav -->
+
+<section class="ftco-about d-md-flex">
+    <div class="one-half img" style="background-image: url({{ r_logo.url }})"></div>
+    <div class="one-half ftco-animate">
+        <div class="heading-section ftco-animate ">
+            <h2>{{ r_name }}, {{ r_add }} </h2>
+            <h3>{% if r_ex == True %} Foodex Exclusive {% endif %}</h3>
+            <b><a><strong>{{ r_cuisine }} cuisine</strong></a></b>
+            <br>
+            <b>Phone: </b><a class="text-success"><strong>{{ r_phone }}</strong></a>
+
+            <br>
+            <b>Avg Time: </b><a class="text-success"><strong>{{ r_time }}</strong></a>
+            <b> Avg Cost: </b><a class="text-success"><strong>&#x20b9; {{ r_cost }}</strong></a>
+            <br>
+{#            <b>:</b> <a class="text-success">&#x20b9;{{ rmin }}</a>#}
+
+            <br>
+        </div>
+    </div>
+</section>
+
+
+<section>
+    <div class="container ">
+    <div align="center">
+        <h2><b>MENU ITEMS</b></h2>
+    </div>
+        <table class="table table-hover table-bordered">
+            <thead>
+            <th>Item Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Veg/Non Veg</th>
+            <th>Add</th>
+            </thead>
+            {% for x in items %}
+                <tr>
+                    <td>{{ x.0 }}</td>
+                    <td>{{ x.2 }}</td>
+                    <td>&#x20b9; {{ x.3 }}</td>
+                    {% if x.1 == True %}
+                        <td>Veg</td>
+                    {% else %}
+                        <td>Non Veg</td>
+                    {% endif %}
+
+
+                    <td>
+                        <div class="d-sm-table-row" style="width:40%; text-align: center; display: inline-block; ">
+
+                            <div class="input-group-btn">
+                                <button id="up" class="btn btn-default"
+                                        onclick="
+                                                document.querySelector('#itemno{{ x.4 }}').innerHTML++;
+                                                pluscounter('{{ x.4 }}');
+                                                "><span class="glyphicon glyphicon-plus"></span></button>
+                            </div>
+                            <span id='itemno{{ x.4 }}'>0</span>
+
+                            <div class="input-group-btn">
+                                <button id="down" class="btn btn-default"
+                                        onclick="if(document.querySelector('#itemno{{ x.4 }}').innerHTML>0){
+                                                document.querySelector('#itemno{{ x.4 }}').innerHTML--;
+                                                minuscounter('{{ x.4 }}');
+                                                }">
+                                    <span class="glyphicon glyphicon-minus"></span></button>
+                            </div>
+                        </div>
+                    </td>
+
+
+                </tr>
+            {% endfor %}
+            </tr>
+        </table>
+        <div class="container">
+            <input type="button" class="btn btn-success btn-lg pull-right" onclick="storearray();" value="Checkout"/>
+        </div>
+    </div>
+
+    <br>
+</section>
+
+
+<script type="text/javascript">
+    var cart = [];
+
+    function pluscounter(pk) {
+        cart.push(pk);
+        console.log(cart);
+    };
+
+    function minuscounter(pk) {
+        if (cart != []) {
+            var removeindex = cart.indexOf(pk);
+            cart.splice(removeindex, 1);
+        }
+        console.log(cart);
+    };
+
+    function storearray() {
+        if (cart.length === 0) {
+            alert('No items selected');
+            return false;
+        }
+        document.cookie = "cart=" + cart + ";Path=/";
+        document.cookie = "rest={{restid}};Path=/";
+        window.location = "/checkout/";
+    };
+</script>
+{#{% endblock %}#}
+
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/jquery-migrate-3.0.1.min.js" %}"></script>
+<script src="{% static "js/popper.min.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+<script src="{% static "js/jquery.easing.1.3.js" %}"></script>
+<script src="{% static "js/jquery.waypoints.min.js" %}"></script>
+<script src="{% static "js/jquery.stellar.min.js" %}"></script>
+<script src="{% static "js/owl.carousel.min.js" %}"></script>
+<script src="{% static "js/jquery.magnific-popup.min.js" %}"></script>
+<script src="{% static "js/aos.js" %}"></script>
+<script src="{% static "js/jquery.animateNumber.min.js" %}"></script>
+<script src="{% static "js/bootstrap-datepicker.js" %}"></script>
+<script src="{% static "js/jquery.timepicker.min.js" %}"></script>
+<script src="{% static "js/scrollax.min.js" %}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="{% static "js/google-map.js" %}"></script>
+<script src="{% static "js/main.js" %}"></script>
+</body>
+</html>
