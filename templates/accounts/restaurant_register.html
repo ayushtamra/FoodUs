@@ -25,18 +25,30 @@
                     <p class="desc">Enter Email Id and password</p>
                     <div class="form-group">
                         <input type="email" class="form-input" name="email" id="email" placeholder="Email" required/>
+                    {% if 'email' in form.errors %}
+                        {% for error in form.email.errors %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-input" name="password" id="password" placeholder="Password" required/>
                         <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" required/>
-                        <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                    {% if 'password' in form.errors %}
+                        {% for error in form.password.errors %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
                     </div>
                     <div class="form-group">
                         <input type="submit" name="submit" id="submit" class="form-submit submit" value="Continue"/>
-                        <a href="{% url "restaurant_login" %}" class="submit-link submit">Sign in</a>
+                        <a href="{% url 'accounts:restaurant_login' %}" class="submit-link submit">Sign in</a>
                     </div>
                 </form>
             </div>
