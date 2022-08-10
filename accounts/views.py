@@ -47,7 +47,7 @@ class CustRegisterView(CreateView):
 
 
 class CustLoginView(FormView):
-    success_url = '/'
+    success_url = '/accounts/register/customer/profile'
     form_class = UserLoginForm
     template_name = 'accounts/customer_login.html'
 
@@ -113,7 +113,7 @@ class RestRegisterView(CreateView):
 
 
 class RestLoginView(FormView):
-    success_url = '/'
+    success_url = 'accounts/register/restaurant/profile'
     form_class = UserLoginForm
     template_name = 'accounts/restaurant_login.html'
 
@@ -135,6 +135,55 @@ class RestLoginView(FormView):
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form))
+
+
+
+
+# To change these 2 profile reg methods if required to the class ones
+
+def customer_profile_register(request):
+    form = CustomerRegisterProfileForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.user = request.user
+        # print(instance)
+        instance.location_id = 1
+        instance.save()
+        return redirect("index")
+    loc = Location.objects.all()
+    locations = []
+    for x in loc:
+        lps = [x.LocationId, x.LocationName]
+        locations.append(lps)
+    context = {
+        'locations': locations,
+        'form': form,
+        'title': "Complete Your profile"
+    }
+    return render(request, 'accounts/customer_profile_register.html', context)
+
+
+
+def restaurant_profile_register(request):
+    form = RestaurantRegisterProfileForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.user = request.user
+        # print(instance)
+        instance.location_id = 1
+        instance.save()
+        return redirect("restaurant_detail")
+    loc = Location.objects.all()
+    locations = []
+    for x in loc:
+        lps = [x.LocationId, x.LocationName]
+        locations.append(lps)
+    context = {
+        'locations': locations,
+        'form': form,
+        'title': "Complete Your profile"
+    }
+    return render(request, 'accounts/restaurant_profile_register.html', context)
 
 
 
