@@ -101,7 +101,7 @@ class RestRegisterView(CreateView):
         if user_form.is_valid():
             user = user_form.save(commit=False)
             password = user_form.cleaned_data.get("password1")
-            user.is_restaurant_owner = TRUE
+            user.is_restaurant_owner = True
             user.set_password(password)
             user.save()
             messages.success(request, 'Successfully registered')
@@ -113,7 +113,7 @@ class RestRegisterView(CreateView):
 
 
 class RestLoginView(FormView):
-    success_url = 'accounts/register/restaurant/profile'
+    success_url = '/'
     form_class = UserLoginForm
     template_name = 'accounts/restaurant_login.html'
 
@@ -149,7 +149,7 @@ def customer_profile_register(request):
         # print(instance)
         instance.location_id = 1
         instance.save()
-        return redirect("index")
+        return redirect("core:index")
     loc = Location.objects.all()
     locations = []
     for x in loc:
