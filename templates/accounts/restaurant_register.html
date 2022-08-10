@@ -24,6 +24,18 @@
                     <h2>Sign up as a Restaurant</h2>
                     <p class="desc">Enter Email Id and password</p>
                     <div class="form-group">
+                        <input type="text" class="form-input" name="username" id="username" placeholder="Username"
+                            required />
+                        {% if 'username' in form.errors %}
+                        {% for error in form.username.errors %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
                         <input type="email" class="form-input" name="email" id="email" placeholder="Email" required/>
                     {% if 'email' in form.errors %}
                         {% for error in form.email.errors %}
@@ -35,7 +47,7 @@
                     {% endif %}
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-input" name="password" id="password" placeholder="Password" required/>
+                        <input type="text" class="form-input" name="password1" id="password1" placeholder="Password" required/>
                         <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
                     {% if 'password' in form.errors %}
                         {% for error in form.password.errors %}
@@ -45,6 +57,19 @@
                         </div>
                         {% endfor %}
                     {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="password2" id="password2"
+                            placeholder="Confirm Password" required />
+                        <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                        {% if 'password2' in form.errors %}
+                        {% for error in form.password2.errors %}
+                        <div class="alert alert-danger alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
                     </div>
                     <div class="form-group">
                         <input type="submit" name="submit" id="submit" class="form-submit submit" value="Continue"/>
