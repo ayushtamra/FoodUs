@@ -46,7 +46,7 @@
                 {% if request.user.is_authenticated %}
                     <li class="nav-item"><a href="{% url 'accounts:logout' %}" class="nav-link">Logout</a></li>
                     {% if request.user.is_customer %}
-                        <li class="nav-item"><a href="{% url 'web' %}" class="nav-link">Restaurants</a>
+                        <li class="nav-item"><a href="{% url 'core:restaurant_index' %}" class="nav-link">Restaurants</a>
                         </li>
                     {% endif %}
                     {% if request.user.is_customer %}

@@ -45,7 +45,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'index' %}"><span
+        <a class="navbar-brand" href="{% url 'core:index' %}"><span
                 class="flaticon-pizza-1 mr-1"></span>Foodex<br><small>Always Delicious.</small></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                 aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,16 +53,16 @@
         </button>
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+                <li class="nav-item active"><a href="{% url 'core:index' %}" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="menu.html" class="nav-link"></a></li>
                 {% if request.user.is_authenticated %}
-                    <li class="nav-item"><a href="{% url 'logout_view' %}" class="nav-link">Logout</a></li>
+                    <li class="nav-item"><a href="{% url 'accounts:logout' %}" class="nav-link">Logout</a></li>
                     {% if request.user.is_customer %}
-                        <li class="nav-item"><a href="{% url 'restaurant_index' %}" class="nav-link">Restaurants</a>
+                        <li class="nav-item"><a href="{% url 'core:restaurant_index' %}" class="nav-link">Restaurants</a>
                         </li>
                     {% endif %}
                     {% if request.user.is_customer %}
-                        <li class="nav-item"><a href="{% url 'myorders' %}" class="nav-link">My Orders</a>
+                        <li class="nav-item"><a href="{% url 'core:myorders' %}" class="nav-link">My Orders</a>
                         </li>
                     {% endif %}
                 {% else %}
@@ -82,7 +82,7 @@
                     </div>
 
                 {% endif %}
-                <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Contact Us</a></li>
+                <li class="nav-item"><a href="{% url 'core:index' %}" class="nav-link">Contact Us</a></li>
 
             </ul>
         </div>
@@ -118,7 +118,7 @@
                          style="border-radius: 8px; border: 1px solid #ddd;">
                     <div class="men-cart-pro">
                         <div class="inner-men-cart-pro">
-                            <a href="{% url 'menu' x.restaurant_id %}" class="link-product-add-cart">Order</a>
+                            <a href="{% url 'core:menu' x.restaurant_id %}" class="link-product-add-cart">Order</a>
                         </div>
                     </div>
                     {% if x.is_exclusive == True %}
@@ -127,19 +127,19 @@
                 </div>
                 <div class="item-info-product ">
                     <h4>
-                        <a href={% url 'menu' x.restaurant_id %}>{{ x.name }}</a>
+                        <a href={% url 'core:menu' x.restaurant_id %}>{{ x.name }}</a>
 
                         {#                    <a href={% url 'index' %}>{{x.name }}</a>#}
                     </h4>
 
                     <h4>
-                        <a href={% url 'menu' x.restaurant_id %}>Avg Cost : &#x20b9; {{ x.avg_cost }}</a>
+                        <a href={% url 'core:menu' x.restaurant_id %}>Avg Cost : &#x20b9; {{ x.avg_cost }}</a>
                     </h4>
                     {# <td><a href="{% url 'ajax_is_favorite' x.restaurant_id  %}"  class="btn btn-default btn-sm btn-favorite" role="button"><span class=" glyphicon glyphicon-star {% if x.is_favorite %}active{% endif %}" action=""></span></a></td>#}
 
 
                     <h4>
-                        <a href={% url 'menu' x.restaurant_id %}>Avg Time : {{ x.avg_time }} mins</a>
+                        <a href={% url 'core:menu' x.restaurant_id %}>Avg Time : {{ x.avg_time }} mins</a>
                     </h4>
                 </div>
                 {#                <div class="info-product-price">#}

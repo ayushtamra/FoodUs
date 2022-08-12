@@ -34,7 +34,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'index' %}"><span
+        <a class="navbar-brand" href="{% url 'core:index' %}"><span
                 class="flaticon-pizza-1 mr-1"></span>Foodex<br><small>Always Delicious.</small></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                 aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,16 +42,16 @@
         </button>
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+                <li class="nav-item active"><a href="{% url 'core:index' %}" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="menu.html" class="nav-link"></a></li>
                 {% if request.user.is_authenticated %}
-                    <li class="nav-item"><a href="{% url 'logout_view' %}" class="nav-link">Logout</a></li>
+                    <li class="nav-item"><a href="{% url 'accounts:logout' %}" class="nav-link">Logout</a></li>
                     {% if request.user.is_customer %}
-                        <li class="nav-item"><a href="{% url 'restaurant_index' %}" class="nav-link">Restaurants</a>
+                        <li class="nav-item"><a href="{% url 'core:restaurant_index' %}" class="nav-link">Restaurants</a>
                         </li>
                     {% endif %}
                     {% if request.user.is_customer %}
-                        <li class="nav-item"><a href="{% url 'myorders' %}" class="nav-link">My Orders</a>
+                        <li class="nav-item"><a href="{% url 'core:myorders' %}" class="nav-link">My Orders</a>
                         </li>
                     {% endif %}
                 {% else %}
@@ -71,7 +71,7 @@
                     </div>
 
                 {% endif %}
-                <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Contact Us</a></li>
+                <li class="nav-item"><a href="{% url 'core:index' %}" class="nav-link">Contact Us</a></li>
 
             </ul>
         </div>
