@@ -172,7 +172,7 @@ def restaurant_profile_register(request):
         # print(instance)
         instance.location_id = 1
         instance.save()
-        return redirect("restaurant_detail")
+        return redirect("core:restaurant_detail")
     loc = Location.objects.all()
     locations = []
     for x in loc:
