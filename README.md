@@ -1,6 +1,14 @@
 
 # FoodUs
 
+[![made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+
+[![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)]()
+
+[![SQLITE3](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
+
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+
 ### A revolutionary idea for the future restaurants!
 
 ### Description
@@ -76,6 +84,5 @@ The application should run on `localhost`
 ### How to contribute to this repository✨
 
 Refer to [CONTRIBUTING.md](./CONTRIBUTING.md)
-
 
 > Made in India :india: by Ayush❤️
