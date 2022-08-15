@@ -21,47 +21,61 @@ Augmented reality visual on their table and they can finalise their order and pa
 
 ### Key features:
 
-- [x] User Authentication(signup/login)
+- QR Code scanner
 
-- [x] Restaurant creation, cuisine creation
+- AR Visualisation(Unique feature)
 
-- [x] Register locations
+- User Authentication(signup/login)
 
-- [x] Order page
+- Restaurant creation, cuisine creation
 
-- [x] Payments
+- Register locations
+
+- Order page
+
+- Payments
 
 
-### How to contribute to this repository✨
+### Running the application locally
 
-* Fork this repository (Click the Fork button in the top right of this page, click your Profile Image)
-* Clone your fork down to your local machine
+#### Step 1
+
+Clone the repository
 
 ```markdown
 git clone https://github.com/ayushtamra/TweeKo.git
 ```
 
-* Create a branch
+#### Step 2
+
+cd inside the project folder
+
+Make a virtual environment, Using
 
 ```markdown
-git checkout -b branch-name
+python3 -m venv venv
 ```
 
-* Make your changes (There are some folders for different category so upload the file accordingly)
-* Commit and push
+Activate it using:
+
+```source venv venv/bin/activate```
+
+#### Step 3: Installing required packages
+
+```pip install -r requirements.txt```
+
+### Step 4: Running the application
+
+Using,
 
 ```markdown
-git add .
-git commit -m 'Commit message'
-git push origin branch-name
+python3 manage.py runserver
 ```
-or
-* Add the file in the forked repository using upload file option then commit the changes in a new branch. 
+The application should run on `localhost`
 
-* Create a new pull request from your forked repository (Click the `New Pull Request` button located at the top of your repo)
-* Wait for your PR review and merge approval!
+### How to contribute to this repository✨
 
-If you are still facing any problem follow steps given in this [website](https://thenewstack.io/getting-legit-with-git-and-github-your-first-pull-request/)
+Refer to [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 
 > Made in India :india: by Ayush❤️
