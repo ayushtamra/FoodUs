@@ -16,6 +16,12 @@
 FoodUs is a unique web based AR food menu app to simplify and improve the
 offline food ordering process inside any restaurant.
 
+
+
+https://user-images.githubusercontent.com/64156683/191695213-27c1c170-feef-46cc-91b4-ce7c401338fa.mp4
+
+
+
 ### How it works:
 
 1. When a Customer comes inside a restaurant, they can scan the restaurant QR code
